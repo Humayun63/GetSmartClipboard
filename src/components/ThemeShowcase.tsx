@@ -609,11 +609,25 @@ const ThemeShowcase: React.FC = () => {
                     />
                   </button>
                 <div 
-                  className="h-48 p-4 flex flex-col justify-between transition-all duration-300 relative"
+                  className="h-64 p-4 flex flex-col justify-between transition-all duration-300 relative"
                   style={{ backgroundColor: theme.colors.background }}
                 >
                   {/* App mockup header */}
                   <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center space-x-2">
+                      <div 
+                        className="w-8 h-8 rounded-full"
+                        style={{ backgroundColor: theme.colors.accent }}
+                      >
+                        <svg fill="none" width="30" height="30" viewBox="0 0 512 512"><defs><linearGradient id="a" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#667eea"></stop><stop offset="100%" stop-color="#764ba2"></stop></linearGradient></defs><circle cx="256" cy="256" r="240" fill="url(#a)" stroke="#fff" stroke-width="8"></circle><rect width="192" height="240" x="160" y="120" fill="#fff" stroke="#e0e0e0" stroke-width="4" rx="16"></rect><rect width="112" height="40" x="200" y="100" fill="#fff" stroke="#e0e0e0" stroke-width="4" rx="20"></rect><rect width="152" height="8" x="180" y="160" fill="#667eea" rx="4"></rect><rect width="120" height="8" x="180" y="180" fill="#667eea" rx="4"></rect><rect width="140" height="8" x="180" y="200" fill="#667eea" rx="4"></rect><rect width="100" height="8" x="180" y="220" fill="#667eea" rx="4"></rect><rect width="130" height="8" x="180" y="240" fill="#667eea" rx="4"></rect><rect width="110" height="8" x="180" y="260" fill="#667eea" rx="4"></rect><rect width="145" height="8" x="180" y="280" fill="#667eea" rx="4"></rect><rect width="95" height="8" x="180" y="300" fill="#667eea" rx="4"></rect><circle cx="320" cy="140" r="12" fill="#667eea"></circle><path stroke="#fff" stroke-width="2" d="M315 140l3 3 7-7"></path></svg>
+                      </div>
+                    </div>
+                    <div 
+                      className="text-xs font-medium truncate"
+                      style={{ color: theme.colors.text }}
+                    >
+                      Smart Clipboard
+                    </div>
                     <div className="flex items-center space-x-2">
                       <div 
                         className="w-3 h-3 rounded-full"
@@ -623,71 +637,61 @@ const ThemeShowcase: React.FC = () => {
                         className="w-3 h-3 rounded-full opacity-60"
                         style={{ backgroundColor: theme.colors.secondary }}
                       ></div>
-                      <div 
-                        className="w-3 h-3 rounded-full opacity-40"
-                        style={{ backgroundColor: theme.colors.primary }}
-                      ></div>
-                    </div>
-                    <div 
-                      className="text-xs font-medium truncate"
-                      style={{ color: theme.colors.text }}
-                    >
-                      Smart Clipboard
                     </div>
                   </div>
                   
                   {/* App mockup content */}
                   <div className="flex-1 flex flex-col">
-                    {/* Title bar */}
-                    <div 
-                      className="text-xs font-bold mb-2"
-                      style={{ color: theme.colors.text }}
-                    >
-                      Recent Clips
+                    {/* Search bar */}
+                    <div className="mb-2">
+                      <input 
+                        type="text" 
+                        placeholder="Search history..." 
+                        className="w-full px-2 py-1 text-xs rounded-md"
+                        style={{
+                          backgroundColor: theme.colors.secondary,
+                          color: theme.colors.text,
+                          border: `1px solid ${theme.colors.primary}`
+                        }}
+                      />
                     </div>
                     
                     {/* Clipboard items */}
-                    <div className="space-y-2">
+                    <div className="space-y-1">
                       <div 
-                        className="p-2 rounded text-xs flex items-center"
+                        className="p-1 rounded text-xs flex items-center"
                         style={{ 
                           backgroundColor: theme.colors.secondary,
                           color: theme.colors.text
                         }}
                       >
-                        <div 
-                          className="w-2 h-2 rounded-full mr-2"
-                          style={{ backgroundColor: theme.colors.accent }}
-                        ></div>
                         <div className="truncate">Text clip example</div>
                       </div>
                       <div 
-                        className="p-2 rounded text-xs flex items-center"
+                        className="p-1 rounded text-xs flex items-center"
                         style={{ 
                           backgroundColor: theme.colors.primary,
                           color: theme.colors.text,
                           border: `1px solid ${theme.colors.secondary}`
                         }}
                       >
-                        <div 
-                          className="w-2 h-2 rounded-full mr-2"
-                          style={{ backgroundColor: theme.colors.accent }}
-                        ></div>
                         <div className="truncate">Image clip preview</div>
+                      </div>
+                      <div 
+                        className="p-1 rounded text-xs flex items-center"
+                        style={{ 
+                          backgroundColor: theme.colors.secondary,
+                          color: theme.colors.text
+                        }}
+                      >
+                        <div className="truncate">Another text clip</div>
                       </div>
                     </div>
                   </div>
                   
-                  {/* Bottom action button */}
-                  <div 
-                    className="mt-2 py-1 px-3 rounded-full text-xs text-center font-medium w-full transition-transform hover:scale-105"
-                    style={{ 
-                      background: theme.colors.accent,
-                      color: '#ffffff',
-                      boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
-                    }}
-                  >
-                    New Clip
+                  {/* Quick Actions */}
+                  <div className="mt-2 text-center text-xs" style={{ color: theme.colors.text }}>
+                    <span className="font-bold">⌘ + ⌥ + V</span> - Paste Menu
                   </div>
                   
                   {/* Theme name tooltip */}
