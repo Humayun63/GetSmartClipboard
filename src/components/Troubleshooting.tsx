@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ChevronDown, 
   ChevronUp, 
@@ -6,7 +6,8 @@ import {
   Settings, 
   RotateCcw, 
   Shield,
-  RefreshCw 
+  RefreshCw,
+  Clipboard
 } from 'lucide-react';
 
 interface TroubleshootingItem {
@@ -17,6 +18,17 @@ interface TroubleshootingItem {
 }
 
 const troubleshootingItems: TroubleshootingItem[] = [
+  {
+    icon: <Shield className="w-6 h-6" />,
+    title: "macOS Security Warning",
+    description: "\"Smart Clipboard\" is damaged and can't be opened. You should move it to the Bin.",
+    solutions: [
+      "This is a macOS security feature. To fix it:",
+      "Open Terminal",
+      "Run the following command:",
+      "`xattr -cr /Applications/Smart\\ Clipboard.app`",
+    ]
+  },
   {
     icon: <Settings className="w-6 h-6" />,
     title: "Tray Icon Not Visible",
@@ -65,6 +77,39 @@ const troubleshootingItems: TroubleshootingItem[] = [
 
 const Troubleshooting: React.FC = () => {
   const [expandedItems, setExpandedItems] = useState<number[]>([]);
+  const [copied, setCopied] = useState<number | null>(null);
+
+  const handleCopy = (command: string, index: number) => {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(command).then(() => {
+        setCopied(index);
+      });
+    } else {
+      // Fallback for older browsers
+      const textArea = document.createElement("textarea");
+      textArea.value = command;
+      // Make the textarea out of sight
+      textArea.style.position = "fixed";
+      textArea.style.left = "-9999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        setCopied(index);
+      } catch (err) {
+        console.error('Fallback: Oops, unable to copy', err);
+      }
+      document.body.removeChild(textArea);
+    }
+  };
+
+  useEffect(() => {
+    if (copied !== null) {
+      const timer = setTimeout(() => setCopied(null), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [copied]);
 
   const toggleItem = (index: number) => {
     setExpandedItems(prev => 
@@ -127,19 +172,43 @@ const Troubleshooting: React.FC = () => {
                     <h4 className="font-semibold text-gray-900 dark:text-white mb-3">
                       Solutions:
                     </h4>
-                    {item.solutions.map((solution, solutionIndex) => (
-                      <div
-                        key={solutionIndex}
-                        className="flex items-start space-x-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
-                      >
-                        <span className="flex items-center justify-center w-6 h-6 bg-green-500 text-white text-xs font-bold rounded-full flex-shrink-0 mt-0.5">
-                          {solutionIndex + 1}
-                        </span>
-                        <span className="text-gray-700 dark:text-gray-300">
-                          {solution}
-                        </span>
-                      </div>
-                    ))}
+                    {item.solutions.map((solution, solutionIndex) => {
+                      const isCommand = solution.startsWith('`') && solution.endsWith('`');
+                      const command = isCommand ? solution.substring(1, solution.length - 1) : solution;
+
+                      return (
+                        <div
+                          key={solutionIndex}
+                          className="flex items-start space-x-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
+                        >
+                          <span className="flex items-center justify-center w-6 h-6 bg-green-500 text-white text-xs font-bold rounded-full flex-shrink-0 mt-0.5">
+                            {solutionIndex + 1}
+                          </span>
+                          {isCommand ? (
+                            <div className="flex items-center justify-between w-full">
+                              <code className="text-sm bg-gray-200 dark:bg-gray-800 rounded p-1 font-mono">
+                                {command}
+                              </code>
+                              <button 
+                                onClick={() => handleCopy(command, solutionIndex)}
+                                className="p-1.5 text-gray-500 hover:bg-gray-300 dark:hover:bg-gray-600 rounded-lg relative"
+                              >
+                                <Clipboard size={18} />
+                                {copied === solutionIndex && (
+                                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-xs rounded py-1 px-2">
+                                    Copied!
+                                  </span>
+                                )}
+                              </button>
+                            </div>
+                          ) : (
+                            <span className="text-gray-700 dark:text-gray-300">
+                              {solution}
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
