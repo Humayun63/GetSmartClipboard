@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Moon, Sun, Github, Download } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
+import Logo from '../icons/Logo';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { isDark, toggleTheme } = useTheme();
+  // const { isDark, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,9 +35,7 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">SC</span>
-            </div>
+            <Logo width={40} height={40} />
             <span className="text-xl font-bold text-gray-900 dark:text-white">Smart Clipboard</span>
           </div>
 
@@ -70,12 +69,12 @@ const Header: React.FC = () => {
 
           {/* Actions */}
           <div className="flex items-center space-x-4">
-            <button
+            {/* <button
               onClick={toggleTheme}
               className="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
             >
               {isDark ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
+            </button> */}
             
             <a
               href="https://github.com/Humayun63/SmartClipboard"

@@ -26,7 +26,7 @@ const features: Feature[] = [
     icon: <Zap className="w-8 h-8" />,
     title: "Lightning Fast Access",
     description: "Quick paste shortcuts and smart paste menu for instant productivity.",
-    details: ["Cmd+Option+V for paste menu", "Cmd+Alt+1-9 for quick paste", "Instant search & filter"]
+    details: ["Cmd+Shift+V for all clipboard history", "Cmd+Alt+1-9 for quick paste", "Instant search & filter"]
   },
   {
     icon: <Palette className="w-8 h-8" />,

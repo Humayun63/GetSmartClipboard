@@ -1,5 +1,6 @@
 import React from 'react';
 import { Download, Github, ChevronDown } from 'lucide-react';
+import Logo from '../icons/Logo';
 
 const Hero: React.FC = () => {
   const scrollToFeatures = () => {
@@ -25,9 +26,7 @@ const Hero: React.FC = () => {
         <div className="space-y-8 animate-fade-in">
           {/* Logo */}
           <div className="flex justify-center mb-8">
-            <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-2xl transform hover:scale-110 transition-transform duration-300">
-              <span className="text-white font-bold text-2xl">SC</span>
-            </div>
+            <Logo width={100} height={100} />
           </div>
 
           {/* Title */}
@@ -44,7 +43,7 @@ const Hero: React.FC = () => {
 
           {/* Features preview */}
           <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-400 max-w-2xl mx-auto">
-            <span className="px-3 py-1 bg-white/10 rounded-full">📋 50 Item History</span>
+            <span className="px-3 py-1 bg-white/10 rounded-full">📋 50+ Item History</span>
             <span className="px-3 py-1 bg-white/10 rounded-full">⚡ Global Shortcuts</span>
             <span className="px-3 py-1 bg-white/10 rounded-full">🎨 10+ Themes</span>
             <span className="px-3 py-1 bg-white/10 rounded-full">🔧 Open Source</span>
