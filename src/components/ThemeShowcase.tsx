@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Palette, Check, RefreshCw, Copy, Zap, ArrowLeftRight, Star } from 'lucide-react';
+import { Palette, Check, RefreshCw, Copy, Zap, ArrowLeftRight, Star, Download } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 
 interface Theme {
@@ -450,16 +450,7 @@ const ThemeShowcase: React.FC = () => {
                 style={{ backgroundColor: themes.find(t => t.name === previewTheme)?.colors.accent }}
               ></div>
               <span>Previewing {previewTheme} Theme</span>
-              <button 
-                className="ml-2 bg-white/20 hover:bg-white/30 rounded-full p-1 transition-all duration-300"
-                onClick={() => {
-                  endThemePreview();
-                  setSelectedTheme(previewTheme);
-                }}
-                title="Apply this theme"
-              >
-                <Check size={14} />
-              </button>
+              
             </div>
           )}
           
@@ -758,19 +749,6 @@ const ThemeShowcase: React.FC = () => {
                 )}
 
                 {/* Hover overlay */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/70 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center">
-                  <span className="text-white font-semibold text-lg mb-2">Apply Theme</span>
-                  <div className="flex space-x-2">
-                    {Object.entries(theme.colors).slice(0, 3).map(([key, color]) => (
-                      <div 
-                        key={key} 
-                        className="w-6 h-6 rounded-full border border-white/30 transition-transform hover:scale-110"
-                        style={{ backgroundColor: color }}
-                        title={`${key}: ${color}`}
-                      />
-                    ))}
-                  </div>
-                </div>
               </div>
 
               {/* Theme info */}
@@ -813,7 +791,18 @@ const ThemeShowcase: React.FC = () => {
           </div>
         )}
         
-        {/* Theme details section */}
+        <div className="text-center mt-16">
+            <a 
+              href="https://github.com/Humayun63/SmartClipboard/releases"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-full hover:shadow-lg transition-all duration-300 hover:scale-105"
+            >
+              <Download size={24} />
+              <span className="text-xl font-semibold">Download the App</span>
+            </a>
+            <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">Available for macOS</p>
+          </div>
         <div className="mt-16 text-center">
           {previewAnimation && animatingTheme && (
             <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50">
@@ -905,17 +894,7 @@ const ThemeShowcase: React.FC = () => {
                 ))}
               </div>
               
-              <div 
-                className="py-3 px-6 rounded-full inline-block font-medium text-sm transition-all duration-300 hover:scale-105 cursor-pointer"
-                style={{ 
-                  backgroundColor: themes.find(t => t.name === selectedTheme)?.colors.accent,
-                  color: '#ffffff',
-                  boxShadow: `0 4px 12px ${themes.find(t => t.name === selectedTheme)?.colors.accent}80`
-                }}
-                onClick={() => alert(`${selectedTheme} theme applied to your Smart Clipboard!`)}
-              >
-                Apply This Theme
-              </div>
+              
             </div>
             
             {/* Comparison theme details */}
@@ -996,21 +975,7 @@ const ThemeShowcase: React.FC = () => {
                   ))}
                 </div>
                 
-                <div 
-                  className="py-3 px-6 rounded-full inline-block font-medium text-sm transition-all duration-300 hover:scale-105 cursor-pointer"
-                  style={{ 
-                    backgroundColor: themes.find(t => t.name === compareTheme)?.colors.accent,
-                    color: '#ffffff',
-                    boxShadow: `0 4px 12px ${themes.find(t => t.name === compareTheme)?.colors.accent}80`
-                  }}
-                  onClick={() => {
-                    setSelectedTheme(compareTheme);
-                    setShowComparison(false);
-                    setCompareTheme(null);
-                  }}
-                >
-                  Switch to This Theme
-                </div>
+                
               </div>
             )}
           </div>
