@@ -367,31 +367,6 @@ const ThemeShowcase: React.FC = () => {
   // Update the actual theme when selected theme changes
   useEffect(() => {
     const themeValue = getThemeValue(selectedTheme);
-    
-    // Show a brief flash animation when changing themes
-    const flashElement = document.createElement('div');
-    flashElement.className = 'fixed inset-0 bg-white z-50 pointer-events-none';
-    flashElement.style.animation = 'theme-flash 0.5s ease-out forwards';
-    document.body.appendChild(flashElement);
-    
-    // Add the animation style if it doesn't exist
-    if (!document.getElementById('theme-flash-style')) {
-      const styleElement = document.createElement('style');
-      styleElement.id = 'theme-flash-style';
-      styleElement.textContent = `
-        @keyframes theme-flash {
-          0% { opacity: 0.8; }
-          100% { opacity: 0; }
-        }
-      `;
-      document.head.appendChild(styleElement);
-    }
-    
-    // Remove the flash element after animation completes
-    setTimeout(() => {
-      document.body.removeChild(flashElement);
-    }, 500);
-    
     setTheme(themeValue as any);
   }, [selectedTheme, setTheme]);
   
@@ -610,27 +585,7 @@ const ThemeShowcase: React.FC = () => {
               onClick={() => setSelectedTheme(formatThemeName(getThemeValue(theme.name)))}
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              {/* Favorite button */}
-              <button
-                className="absolute top-2 left-2 z-10 w-8 h-8 bg-white/80 dark:bg-gray-800/80 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleFavorite(theme.name);
-                }}
-              >
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  viewBox="0 0 24 24" 
-                  fill={favoriteThemes.includes(theme.name) ? 'currentColor' : 'none'} 
-                  stroke="currentColor" 
-                  strokeWidth="2" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  className={`w-5 h-5 ${favoriteThemes.includes(theme.name) ? 'text-yellow-500' : 'text-gray-500 dark:text-gray-400'}`}
-                >
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
-                </svg>
-              </button>
+              
               {/* Theme preview */}
                <div 
                   className={`relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group ${previewTheme === theme.name ? 'ring-2 ring-blue-400 scale-105 shadow-xl' : ''}`}
@@ -640,7 +595,7 @@ const ThemeShowcase: React.FC = () => {
                 >
                   {/* Favorite button */}
                   <button 
-                    className="absolute top-2 right-2 z-30 bg-black/30 hover:bg-black/50 p-1.5 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 focus:opacity-100"
+                    className={`absolute top-2 right-2 z-30 bg-black/30 hover:bg-black/50 p-1.5 rounded-full transition-all duration-300 ${favoriteThemes.includes(theme.name) ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 focus:opacity-100'}`}
                     onClick={(e) => {
                       e.stopPropagation(); // Prevent card click
                       toggleFavorite(theme.name);
